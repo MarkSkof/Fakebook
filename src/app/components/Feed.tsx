@@ -19,6 +19,7 @@ export default function Feed() {
           <button className="bg-blue-600 text-white py-2 px-4 rounded-lg">Live Video</button>
           <button className="bg-green-600 text-white py-2 px-4 rounded-lg">Photo/Video</button>
           <button className="bg-yellow-600 text-white py-2 px-4 rounded-lg">Feeling/Activity</button>
+       
         </div>
       </div>
       {/* Posts */}

@@ -1,5 +1,7 @@
+'use client'
 import { FaFacebook, FaUserCircle, FaBell, FaHome, FaUsers } from 'react-icons/fa';
 import { MdOutlineVideoLibrary, MdOutlineShoppingCart } from 'react-icons/md';
+import {searchUsers_OnInputChange, searchUsers_OnKeyDown} from '../scripts/searchUsers';
 
 export default function Navbar() {
   return (
@@ -7,10 +9,13 @@ export default function Navbar() {
       {/* Logo */}
       <div className="flex items-center space-x-4">
         <FaFacebook className="text-white text-3xl" />
-        <input
+        <input 
           type="text"
           placeholder="Search Facebook"
           className="rounded-full px-4 py-2 text-sm"
+          //onChange={e => console.log("kk")}
+          onChange={searchUsers_OnInputChange}
+          onKeyDown={searchUsers_OnKeyDown} 
         />
       </div>
       {/* Navigation */}
