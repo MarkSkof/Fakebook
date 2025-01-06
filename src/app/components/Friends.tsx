@@ -1,13 +1,13 @@
 'use client'
 import { UserInfo } from '../components/UserInfoTile';
 
-import React from 'react';
-
-        
-        
+import React from 'react';   
 
 export default function Friends() {
-  const userCount = 20;  // Number of user profiles
+  const userCount = 10;  // Number of user profiles
+  const ids = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+  ];
   const names = [
     "Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Hannah",
     "Ivy", "Jack", "Karen", "Leo", "Mona", "Nina", "Oscar", "Paul", "Quincy",
@@ -42,6 +42,7 @@ export default function Friends() {
   const userInfoList = [...Array(userCount)].map((_, index) => (
     <UserInfo 
       key={index} 
+      id={ids[index % names.length]}
       name={names[index % names.length]} 
       imgPath={imgPaths[index % imgPaths.length]}  // Cycle through the imgPaths array if needed
     />
@@ -52,7 +53,7 @@ export default function Friends() {
       {/* Create Post Section */}
       <div className="bg-white p-4 rounded-lg shadow mb-4"> 
         <div>
-          <text>Prošnje za prijateljstvo</text>
+          <text>Friend Requests</text>
         </div>
         <div style={{ maxWidth: "1050px" }} className='users'>{userInfoList}</div>
         <style>{

@@ -1,12 +1,13 @@
 import React from "react";
 
-interface UserInfoProps {
+export interface UserInfoProps {
+  id: number
   name: string;  
   imgPath: string;
 }
 
 // String name, String imgPath
-export const UserInfo: React.FC<UserInfoProps> = ({ name, imgPath }) => {
+export const UserInfo: React.FC<UserInfoProps> = ({ id, name, imgPath }) => {
   return (
     <div
       className="x9f619 x78zum5 x1r8uery xdt5ytf x1iyjqo2 xs83m0k x150jy0e x1e558r4 xjkvuk6 x1iorvi4 xnpuxes"
