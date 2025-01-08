@@ -1,5 +1,8 @@
-import { ContactUserInfo } from '../components/ContactUserTile';
-export default function Widgets() {
+import { useState } from 'react';
+import { ContactUserInfo } from './ContactUserTile';
+import SearchBar from './SearchBar';
+
+export default function SideBar_Contacts() {
     const userCount = 20;  // Number of user profiles
     const ids = [
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
@@ -44,20 +47,37 @@ export default function Widgets() {
       />
     ));
 
+    const [searchQuery, setSearchQuery] = useState("");
+    
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(e.target.value);
+    }
+
   return (
     <div className="bg-gray-100 p-4 w-1/4 h-screen">
       <h3 className="font-bold mb-4">Contacts</h3>
+      <div>
+        <SearchBar
+          placeHolder="Search..."
+          searchQuery={searchQuery}
+          onSearchChange={handleSearchChange}
+        />
+      <div>
+      { /*FOR TESTING*/<p>Search Query: {searchQuery}</p> }
+      </div>
+      </div>
       <div className="bg-white p-4 rounded-lg shadow mb-4"> 
-        <div>
-          <text>Contacts</text>
-        </div>
         <div className='users' style={{maxWidth:"250"}}>{contactUserInfoList}</div>
-        <style> {  `.users {
+      </div>   
+      <style> {  `.users {
+        width: '100%'
         display: flex;
         flex-wrap: wrap;  
-        gap: 10px;`}
-        </style>
-      </div>   
+        gap: 10px;
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: hidden; `}
+      </style>
     </div>      
   );
 }

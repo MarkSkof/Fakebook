@@ -5,6 +5,20 @@ interface FileUploadProps {
   description: string;
 }
 
+export const getAcceptType_ViaString = (mediaType: string) => {
+  if (mediaType === 'image') {
+    return "image/png, image/jpeg, image/gif, image/webp";
+  }
+
+  if (mediaType === 'video') {
+    return "video/mp4, video/webm, video/avi";
+  }
+
+  // Return an empty string for unsupported file types
+  console.warn(`Unsupported media type: ${mediaType}`);
+  return "";
+};
+
 export const renderFilePreview_ViaString = (fileUrl: string, mediaType: string) => {
 
   if (mediaType === 'image') {

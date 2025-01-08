@@ -1,8 +1,8 @@
 'use client'
 import Navbar from '../app/components/Navbar';
-import Sidebar from '../app/components/Sidebar';
+import Sidebar_Posts from './components/Sidebar_Left';
 import Feed from '../app/components/Feed';
-import Widgets from '../app/components/Widgets';
+import SideBar_Contacts from './components/Sidebar_Right';
 import Friends from '../app/components/Friends';
 import VideosPage from '../app/components/Videos';
 import SavedPostsPage from '../app/components/SavedPost';
@@ -53,11 +53,24 @@ export default function HomePage() {
     setIsEventsModalOpen(!isEventsModalOpen);
   };
 
+  const openHomeModal = () => {
+    setIsFriendsModalOpen(false);
+    setIsSavedModalOpen(false);
+    setIsVideosModalOpen(false);
+    setIsEventsModalOpen(false);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <Navbar 
+      openHomeModal={openHomeModal} 
+      openCloseFriendsModal={openFriendsModal} 
+      openSavedPostsModal={openSavedModal} 
+      openCloseVideosModal={openVideosModal} 
+      openCloseEventsModal={openEventsModal} 
+      />
       <div className="flex flex-1">
-      <Sidebar 
+      <Sidebar_Posts 
       openCloseFriendsModal={openFriendsModal} 
       openSavedPostsModal={openSavedModal} 
       openCloseVideosModal={openVideosModal} 
@@ -71,7 +84,7 @@ export default function HomePage() {
           {isEventsModalOpen && <EventsPage />}
           </>
         )}
-        <Widgets />
+        <SideBar_Contacts />
       </div>
     </div>
   );

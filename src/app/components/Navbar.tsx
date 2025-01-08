@@ -1,9 +1,13 @@
 'use client'
 import { FaFacebook, FaUserCircle, FaBell, FaHome, FaUsers } from 'react-icons/fa';
-import { MdOutlineVideoLibrary, MdOutlineShoppingCart } from 'react-icons/md';
+import { MdOutlineVideoLibrary } from 'react-icons/md';
 import {searchUsers_OnInputChange, searchUsers_OnKeyDown} from '../scripts/searchUsers';
 
-export default function Navbar() {
+export default function Navbar(
+  { openHomeModal, openCloseFriendsModal, openSavedPostsModal, openCloseVideosModal, openCloseEventsModal }
+  : { openHomeModal?: () => void, openCloseFriendsModal?: () => void, openSavedPostsModal?: () => void, openCloseVideosModal?: () => void, openCloseEventsModal?: () => void },
+  
+) {
   return (
     <div className="bg-blue-600 p-2 flex items-center justify-between">
       {/* Logo */}
@@ -20,15 +24,14 @@ export default function Navbar() {
       </div>
       {/* Navigation */}
       <div className="flex space-x-8 text-white">
-        <FaHome className="text-2xl cursor-pointer" />
-        <FaUsers className="text-2xl cursor-pointer" />
-        <MdOutlineVideoLibrary className="text-2xl cursor-pointer" />
-        <MdOutlineShoppingCart className="text-2xl cursor-pointer" />
+        <FaHome onClick={openHomeModal} className="text-2xl cursor-pointer" />
+        <FaUsers onClick={openCloseFriendsModal} className="text-2xl cursor-pointer" />
+        <MdOutlineVideoLibrary onClick={openCloseVideosModal} className="text-2xl cursor-pointer" />
       </div>
       {/* User Actions */}
       <div className="flex items-center space-x-4">
-        <FaBell className="text-2xl text-white cursor-pointer" />
-        <FaUserCircle className="text-3xl text-white cursor-pointer" />
+        <FaBell onClick={() => console.log("TODO notifications")} className="text-2xl text-white cursor-pointer" />
+        <FaUserCircle onClick={() => console.log("TODO settings") }className="text-3xl text-white cursor-pointer" />
       </div>
     </div>
   );

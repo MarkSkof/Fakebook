@@ -1,7 +1,7 @@
 'use client';
 import { FaUsers, FaBookmark, FaClock, FaVideo, FaCalendar, FaChartBar } from 'react-icons/fa';
 
-export default function Sidebar(
+export default function Sidebar_Posts(
   { openCloseFriendsModal: openCloseFriendsModal, openSavedPostsModal, openCloseVideosModal, openCloseEventsModal }
   : { openCloseFriendsModal?: () => void, openSavedPostsModal?: () => void, openCloseVideosModal?: () => void, openCloseEventsModal?: () => void },
   

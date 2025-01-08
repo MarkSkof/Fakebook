@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import FileUploadComponent from '../scripts/fileIUpload';
+import FileUploadComponent from '../scripts/fileUploadFunctions';
 import { UserInfoProps } from './UserInfoTile';
 
 export const ContactUserInfo: React.FC<UserInfoProps> = ({ id, name, imgPath }) => {
   const [isOptionMenuOpen, setIsOptionMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const menuRef = useRef<HTMLDivElement>(null);
+
+  const [isHovered, setIsHovered] = useState(false);
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
 
   // Focus the menu when it opens
   useEffect(() => {
@@ -16,9 +20,9 @@ export const ContactUserInfo: React.FC<UserInfoProps> = ({ id, name, imgPath }) 
 
   function ShowPopUpMenu(e: React.MouseEvent<HTMLImageElement>) {
     setIsOptionMenuOpen((prevState) => !prevState);
-    const position = (e.target as HTMLImageElement).getBoundingClientRect();
+    const position = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
     setMenuPosition({
-      x: position.right,
+      x: position.left,
       y: position.bottom,
     });
   }
@@ -39,12 +43,11 @@ export const ContactUserInfo: React.FC<UserInfoProps> = ({ id, name, imgPath }) 
   }, []);
 
   return (
-    <div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div onClick={ShowPopUpMenu} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div style={{ display: 'flex', alignItems: 'center', backgroundColor: isHovered ? "rgba(35, 35, 36, 0.1)" : "white", transition: "background-color 0.3s ease"}}>
         <img
           src={imgPath}
           style={{ width: '50px', height: '50px', marginRight: '10px', objectFit: 'cover' }}
-          onClick={ShowPopUpMenu}
         />
         {isOptionMenuOpen && (
           <div

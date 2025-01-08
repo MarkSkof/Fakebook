@@ -48,21 +48,26 @@ export default function Friends() {
     />
   ));
 
-  return (
-    <div className="zz">
-      {/* Create Post Section */}
-      <div className="bg-white p-4 rounded-lg shadow mb-4"> 
-        <div>
-          <text>Friend Requests</text>
-        </div>
-        <div style={{ maxWidth: "1050px" }} className='users'>{userInfoList}</div>
-        <style>{
-        `.users {
-        display: flex;
-        flex-wrap: wrap;  
-        gap: 10px;`
-        }</style>
-      </div>
+  return <div className="zz">
+  {/* Create Post Section */}
+  <div className="bg-white p-4 rounded-lg shadow mb-4">
+    <div>
+      <h3 className="font-bold mb-4">Friend Requests</h3>
     </div>
-  );
+    <div style={{ maxWidth: "1050px" }} className="friendRequests">
+      {userInfoList}
+    </div>
+    <style>{`
+      .friendRequests {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .friendRequests > * {
+        flex: 0 0 25%; /* Take 25% of the row width */
+        box-sizing: border-box; /* Include padding and border in width */
+      }
+    `}</style>
+  </div>
+</div>
 }

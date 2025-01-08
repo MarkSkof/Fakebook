@@ -1,7 +1,9 @@
-import { UploadedFilePost } from '../components/UploadedFileTile';
+import { useEffect, useState } from 'react';
+import { UploadedFilePost } from './UploadedPost';
+import SearchBar from './SearchBar';
 
-
-export default function Widgets() {
+// TODO -> mjbi bi loh upurabu kr od uploaded post in dov funkcijo (k edina razlika bo v fetchu za bazo)
+export default function Videos() {
     const userCount = 10;  // Number of user profiles
     const ids = [
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9
@@ -53,23 +55,41 @@ export default function Widgets() {
           fileType={imgTypes[index % imgPaths.length]}  
           postDate={postDates[index % names.length]} 
           likeCount={likes[index % names.length]} 
+          dislikeCount={likes[index % names.length]} 
           comments={[]}        
         />
       ));
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   return (
     <div className="bg-gray-100 p-4 w-1/4 h-screen">
-      <h3 className="font-bold mb-4">Contacts</h3>
+      <div>
+        <h3 className="font-bold mb-4">Videos</h3>
+      </div>
+      <div>
+      <SearchBar
+        placeHolder="Search..."
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
+      />
+      <div>
+        { /*FOR TESTING*/<p>Search Query: {searchQuery}</p> }
+      </div>
+    </div>
       <div className="bg-white p-4 rounded-lg shadow mb-4"> 
-        <div className='users' style={{maxWidth:"1050px"}}>{uploadedFilePostList}
-        <style> {  `.users {
+        <div className='posts' style={{maxWidth:"1050px"}}>{uploadedFilePostList}
+        </div>
+      </div>   
+      <style> {`.posts {
         display: flex;
         flex-wrap: wrap;  
         gap: 10px;`}
-        </style>
-        </div>
-      </div>   
+      </style>
     </div>      
   );
 }
