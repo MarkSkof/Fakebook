@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useRef, useEffect } from 'react';
 import FileUploadComponent from '../scripts/fileUploadFunctions';
 import { UserInfoProps } from './UserInfoTile';
@@ -14,29 +15,38 @@ export const ContactUserInfo: React.FC<UserInfoProps> = ({ id, name, imgPath }) 
   // Focus the menu when it opens
   useEffect(() => {
     if (isOptionMenuOpen && menuRef.current) {
-      menuRef.current.focus(); 
+      menuRef.current.focus(); // Set focus on the pop-up menu
     }
-  }, [isOptionMenuOpen]); 
+  }, [isOptionMenuOpen]); // This effect runs when isOptionMenuOpen changes
 
-  function ShowPopUpMenu(e: React.MouseEvent<HTMLImageElement>) {
-    setIsOptionMenuOpen((prevState) => !prevState);
-    const position = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+  const ShowPopUpMenu = (e: React.MouseEvent<HTMLImageElement>) => {
+    setIsOptionMenuOpen(!isOptionMenuOpen);
+
+    const position = e.currentTarget.getBoundingClientRect();
+    
+    // Get the parent offset for both X and Y directions
+    const parentOffset = e.currentTarget.offsetParent?.getBoundingClientRect();
+    
     setMenuPosition({
-      x: position.left,
-      y: position.bottom,
+      x: position.left - (parentOffset?.left || 0),  // Adjust for parent offset in X
+      y: position.bottom - (parentOffset?.top || 0), // Adjust for parent offset in Y
     });
-  }
+  };
 
-  // Close the menu if the user clicks outside of it
-  const handleClickOutside = (e: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-      setIsOptionMenuOpen(false);
-    }
+  const handleMenuClick = (e: React.MouseEvent) => {
+    // Stop the event propagation to prevent the menu from closing
+    e.stopPropagation();
   };
 
   useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsOptionMenuOpen(false);
+      }
+    };
+  
     document.addEventListener('mousedown', handleClickOutside);
-
+  
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -47,12 +57,13 @@ export const ContactUserInfo: React.FC<UserInfoProps> = ({ id, name, imgPath }) 
       <div style={{ display: 'flex', alignItems: 'center', backgroundColor: isHovered ? "rgba(35, 35, 36, 0.1)" : "white", transition: "background-color 0.3s ease"}}>
         <img
           src={imgPath}
-          style={{ width: '50px', height: '50px', marginRight: '10px', objectFit: 'cover' }}
+          style={{ width: '50px', height: '50px', marginRight: '10px', objectFit: 'cover', borderRadius: '50%' }}
         />
         {isOptionMenuOpen && (
           <div
-            ref={menuRef} // Assign the ref to the menu container
-            tabIndex={-1} // Ensure the menu is focusable
+            ref={menuRef} 
+            tabIndex={-1} 
+            onClick={handleMenuClick} // Stop click event propagation
             style={{
               position: 'absolute',
               top: `${menuPosition.y}px`, 
@@ -61,7 +72,7 @@ export const ContactUserInfo: React.FC<UserInfoProps> = ({ id, name, imgPath }) 
               border: '1px solid black',
               padding: '10px',
               boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-              zIndex: 10,
+              zIndex: 1000, 
             }}
           >
             <ul style={{ height: '200px', overflowY: 'auto' }}>

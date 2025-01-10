@@ -71,14 +71,13 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({ accept, description })
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
-      setIsMenuOpen(true); // Open the menu when a file is selected
+      //setIsMenuOpen(true); // Open the menu when a file is selected
     }
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-
 
   return (
     <div>

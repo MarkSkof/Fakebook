@@ -10,12 +10,14 @@ export default function Navbar({
   openSavedPostsModal,
   openCloseVideosModal,
   openCloseEventsModal,
+  openCloseProfileModal,
 }: {
   openHomeModal?: () => void;
   openCloseFriendsModal?: () => void;
   openSavedPostsModal?: () => void;
   openCloseVideosModal?: () => void;
   openCloseEventsModal?: () => void;
+  openCloseProfileModal?: () => void;
 }) {
   const router = useRouter();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -33,19 +35,25 @@ export default function Navbar({
     router.push('/change-password'); // Redirect to Change Password page
   };
 
+  const [menuPosition, setProfileMenuPosition] = useState({ x: 0, y: 0 });
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (profileMenuRef.current && !profileMenuRef.current.contains(e.target as Node)) {
         setIsProfileMenuOpen(false);
-      }
-    };
+        const position = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+        setProfileMenuPosition({
+          x: position.left,
+          y: position.bottom,
+        });
+    }};
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
-    <div className="bg-blue-600 p-2 flex items-center justify-between">
+    <div className="position: fixed top-0 bg-blue-600 p-2 flex items-center justify-between w-full z-50" >
       {/* Logo */}
       <div className="flex items-center space-x-4">
         <FaFacebook className="text-white text-3xl" />
@@ -63,7 +71,7 @@ export default function Navbar({
       </div>
       {/* User Actions */}
       <div className="flex items-center space-x-4 relative">
-        <FaBell className="text-2xl text-white cursor-pointer" />
+        <FaBell onClick={() => console.debug("Feature: notifications not yet implemented")} className="text-2xl text-white cursor-pointer" />
         <FaUserCircle
           onClick={toggleProfileMenu}
           className="text-3xl text-white cursor-pointer"
@@ -72,9 +80,20 @@ export default function Navbar({
         {isProfileMenuOpen && (
           <div
             ref={profileMenuRef}
-            className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+            className="absolute mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+            style={{
+              position: 'absolute',
+              top: `${menuPosition.y}px`, 
+              right: `${menuPosition.x}px`,
+            }}
           >
-            <ul>
+            <ul> 
+              <li
+                className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                onClick={() => {setIsProfileMenuOpen(false); openCloseProfileModal?.(); } }
+              >
+                Open Profile
+              </li>
               <li
                 className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
                 onClick={handleChangePassword}

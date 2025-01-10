@@ -1,11 +1,12 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
 import { getAcceptType_ViaString, renderFilePreview_ViaString } from "../scripts/fileUploadFunctions";
 import { GrLike, GrDislike } from "react-icons/gr";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { MdBookmarkAdd, MdBookmarkAdded } from 'react-icons/md';
+import axios from 'axios';
 
 interface UploadedFileProps {
     id: number
@@ -54,7 +55,8 @@ export const UploadedFilePost: React.FC<UploadedFileProps> = ({ id, name, imgPat
                             marginRight: '10px',
                             width: '50px', 
                             height: '50px', 
-                            objectFit: 'cover'
+                            objectFit: 'cover',
+                            borderRadius: '50%'   
                         }}
                     />
                     <div>

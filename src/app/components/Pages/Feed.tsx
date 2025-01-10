@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Post from './Post';
+import Post from '../Post';
 
 export default function Feed() {
   const [isModalOpen, setIsModalOpen] = useState(false);

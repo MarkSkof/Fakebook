@@ -7,7 +7,7 @@ export default function Sidebar_Posts(
   
 ) {
   return (
-    <div className="bg-gray-100 p-4 w-1/4 h-screen" >
+    <div className="position: fixed left-0 top-[46px] bg-gray-100 p-4 w-1/4 h-screen" >
       <ul>
         <li className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer" onClick={openCloseFriendsModal}>
           <FaUsers className="text-blue-600" />
